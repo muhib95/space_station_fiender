@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "343577288329",
+    "project_id": "international-space-stat-7b7a2",
+    "storage_bucket": "international-space-stat-7b7a2.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:343577288329:android:03abd315a876912fb3b058",
+        "android_client_info": {
+          "package_name": "com.example.iss_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAqiNaqBN0VARsCQ24VVtd0eFypTJ8o4Yo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
