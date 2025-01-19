@@ -1,6 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:iss_app/screen/auth_screen/auth_screen.dart';
+import 'package:iss_app/screen/auth_screen/login_screen.dart';
+import 'package:iss_app/screen/auth_screen/signup_screen.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -35,7 +37,8 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: AuthScreen(),
+      debugShowCheckedModeBanner: false,
+      home: LoginScreen(),
     );
   }
 }
