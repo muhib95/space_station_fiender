@@ -1,5 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:iss_app/screen/auth_screen/signup_screen.dart';
+import 'package:iss_app/screen/home_screen/home_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -9,6 +11,46 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  String email = "", password = "";
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  bool isLoading = false;
+
+  void login(String emailAddress, String password) async {
+    print('$emailAddress, $password');
+    setState(() {
+      isLoading = true;
+    });
+    try {
+      FirebaseAuth.instance.setLanguageCode('en');
+      final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: emailAddress,
+        password: password,
+      );
+      print("Login ${credential.user}");
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => HomeScreen(),
+        ),
+      );
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Sign in successful!')),
+      );
+    } catch (e) {
+      print('Error: ${e}');
+      // if (e.code == 'user-not-found') {
+      //   print('No user found for that email.');
+      // } else if (e.code == 'wrong-password') {
+      //   print('Wrong password provided for that user.');
+      // }
+    } finally {
+      setState(() {
+        isLoading = false;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,10 +63,11 @@ class _LoginScreenState extends State<LoginScreen> {
                 padding: EdgeInsets.only(left: 30.0, right: 30.0),
                 width: MediaQuery.of(context).size.width,
                 decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                        colors: [Color(0xFF9dc3d5), Color(0xFF9ac3d4), Color.fromARGB(145, 27, 94, 118)],
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight)),
+                    gradient: LinearGradient(colors: [
+                  Color(0xFF9dc3d5),
+                  Color(0xFF9ac3d4),
+                  Color.fromARGB(145, 27, 94, 118),
+                ], begin: Alignment.topLeft, end: Alignment.bottomRight)),
                 child: Padding(
                   padding: const EdgeInsets.only(left: 30.0, right: 30.0),
                   child: Column(
@@ -33,7 +76,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         height: 30.0,
                       ),
                       TextField(
-                        // controller: mailcontroller,
+                        controller: emailController,
                         decoration: InputDecoration(
                           hintText: "Email",
                           hintStyle: TextStyle(
@@ -49,7 +92,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         height: 30.0,
                       ),
                       TextField(
-                        // controller: passwordcontroller,
+                        controller: passwordController,
                         decoration: InputDecoration(
                           hintText: "Password",
                           hintStyle: TextStyle(
@@ -76,6 +119,9 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                             GestureDetector(
                               onTap: () {
+                                email = emailController.text;
+                                password = passwordController.text;
+                                login(email, password);
                                 print('Sign In');
                               },
                               child: Material(
