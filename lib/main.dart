@@ -1,13 +1,25 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:iss_app/screen/auth_screen/auth_screen.dart';
-import 'package:iss_app/screen/auth_screen/login_screen.dart';
-import 'package:iss_app/screen/auth_screen/signup_screen.dart';
+import 'package:iss_app/service/repositories/api_call.dart';
+import 'package:iss_app/view_model/home_view_model.dart';
+import 'package:provider/provider.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   fireBaseConnect();
-  runApp(const MyApp());
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (context) => HomeViewModel(
+            apiCall: ApiCall(),
+          ),
+        ),
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -38,13 +50,12 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       debugShowCheckedModeBanner: false,
-      home: LoginScreen(),
+      home: AuthScreen(),
     );
   }
 }
 
-
-Future<void> fireBaseConnect()async{
+Future<void> fireBaseConnect() async {
   try {
     await Firebase.initializeApp();
     print("Firebase successfully initialized");
@@ -53,5 +64,4 @@ Future<void> fireBaseConnect()async{
   } finally {
     print("Initialization process complete");
   }
-
 }
