@@ -19,8 +19,10 @@ class _HomeScreenState extends State<HomeScreen> {
     Future.delayed(
       Duration.zero,
       () {
-        homeViewModel.getPosition();
+
         homeViewModel.startTimer();
+        homeViewModel.getPosition();
+
       },
     );
   }
@@ -41,10 +43,17 @@ class _HomeScreenState extends State<HomeScreen> {
                 return Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
+
                   children: [
                     Text('Latitude:${value.long}'),
+                    SizedBox(height: 10.0,),
                     Text('Longitude:${value.long}'),
+                    SizedBox(height: 10.0,),
                     Text('UTC Time:${value.lastUtcTime}'),
+                    SizedBox(height: 10.0,),
+                    Text('Local Time:${value.lastLocalTime}'),
+                    Text('Country name:${value.countryName}'),
+                    SizedBox(height: 20.0,),
                     ElevatedButton(
                       onPressed: () {
                         value.getPosition();
